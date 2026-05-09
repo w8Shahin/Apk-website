@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>APK Vault • Modern Dark Downloads</title>
+  <!-- Pure HTML, CSS, JavaScript – single file. Smooth animations, dark UI, responsive. -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 10%, #1e1f2b, #0b0c12);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+      color: #e0e0e0;
+      transition: background 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: clamp(2rem, 7vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #c084fc, #8b5cf6, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.2rem;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .subtitle span {
+      background: #232533;
+      padding: 0.2rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #b0b7c9;
+    }
+
+    .apps-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .app-card {
+      background: rgba(20, 22, 31, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2.2rem;
+      padding: 1.5rem 1.5rem 1.8rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(138, 92, 246, 0.15) inset;
+      transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.2s;
+      animation: cardPop 0.5s ease-out;
+      will-change: transform;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 28px 40px -12px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(168, 130, 255, 0.3) inset;
+      border-color: rgba(139, 92, 246, 0.45);
+    }
+
+    @keyframes cardPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .app-icon {
+      width: 4.8rem;
+      height: 4.8rem;
+      background: linear-gradient(145deg, #2b2d3c, #191b26);
+      border-radius: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .app-card:hover .app-icon {
+      transform: scale(1.02);
+    }
+
+    .app-icon svg {
+      width: 2.8rem;
+      height: 2.8rem;
+      filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.5));
+    }
+
+    .app-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 0;
+    }
+
+    .app-name {
+      font-weight: 650;
+      font-size: 1.4rem;
+      letter-spacing: -0.2px;
+      color: #f1f5f9;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(139, 92, 246, 0.18);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 2rem;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #c4b5fd;
+      width: fit-content;
+      backdrop-filter: blur(5px);
+      letter-spacing: 0.2px;
+      transition: 0.2s;
+    }
+
+    .download-btn {
+      background: linear-gradient(105deg, #7c3aed, #8b5cf6);
+      border: none;
+      border-radius: 2.5rem;
+      padding: 0.7rem 1.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      box-shadow: 0 8px 18px -6px rgba(99, 102, 241, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(135deg, #9f7efb, #7c3aed);
+      box-shadow: 0 12px 22px -6px #8b5cf6;
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: scale(1.03);
+    }
+
+    .download-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.7);
+      transition: 0.1s;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-note a {
+      color: #a78bfa;
+      text-decoration: none;
+      border-bottom: 1px dotted #5b5f7a;
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 500px) {
+      body {
+        padding: 1rem;
+      }
+
+      .app-card {
+        flex-wrap: wrap;
+        gap: 1rem;
+        border-radius: 2rem;
+        padding: 1.3rem 1.2rem 1.5rem;
+      }
+
+      .app-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 1.5rem;
+      }
+
+      .app-icon svg {
+        width: 2.2rem;
+        height: 2.2rem;
+      }
+
+      .app-info {
+        flex: 2;
+        min-width: 140px;
+      }
+
+      .download-btn {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.3rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* additional smoothness */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .btn-text {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚡ APK Vault</h1>
+      <div class="subtitle">
+        <span>✨ dark edition</span> 
+        <span>🔒 safe & fast</span>
+      </div>
+    </header>
+
+    <div class="apps-grid" id="appsGrid">
+      <!-- Cards are generated via JavaScript to keep it pure and dynamic, but also clean -->
+    </div>
+
+    <div class="footer-note">
+      <span>🔹 tap to download</span>
+      <span>•</span>
+      <span>placeholders for demo</span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // App data with placeholder APK links (realistic dummy links)
+      const appsData = [
+        {
+          name: "Nova Launcher Prime",
+          version: "8.1.2",
+          iconColor1: "#00d4ff",
+          iconColor2: "#0ea5e9",
+          // placeholder APK link (direct download simulation)
+          apkUrl: "https://example.com/download/nova-launcher-prime-v8.1.2.apk",
+          iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" // minimal rocket/settings shape
+        },
+        {
+          name: "Spark Mail",
+          version: "3.8.4",
+          iconColor1: "#f97316",
+          iconColor2: "#fb923c",
+          apkUrl: "https://example.com/download/spark-mail-v3.8.4.apk",
+          iconPath: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+        }
+      ];
+
+      const grid = document.getElementById('appsGrid');
+
+      function createAppCard(app) {
+        const card = document.createElement('div');
+        card.className = 'app-card';
+
+        // Icon container with SVG
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'app-icon';
+        iconDiv.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" fill="url(#grad-${app.name.replace(/\s/g, '')})" opacity="0.95" />
+            <path d="${app.iconPath}" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="grad-${app.name.replace(/\s/g, '')}" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="${app.iconColor1}" />
+                <stop offset="1" stop-color="${app.iconColor2}" />
+              </linearGradient>
+            </defs>
+          </svg>
+        `;
+
+        // Info section
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'app-info';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'app-name';
+        nameSpan.textContent = app.name;
+
+        const versionSpan = document.createElement('span');
+        versionSpan.className = 'version-badge';
+        versionSpan.innerHTML = `📦 v${app.version}`;
+
+        infoDiv.appendChild(nameSpan);
+        infoDiv.appendChild(versionSpan);
+
+        // Download button
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'download-btn';
+        downloadBtn.innerHTML = `<span class="btn-text"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> APK</span>`;
+
+        // Add click event for download (placeholder)
+        downloadBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          // Simulate download interaction – using placeholder link
+          const anchor = document.createElement('a');
+          anchor.href = app.apkUrl;
+          anchor.download = `${app.name.replace(/\s+/g, '-').toLowerCase()}-v${app.version}.apk`;
+          anchor.target = '_blank';  // placeholder opens in new tab (simulate download)
+          anchor.rel = 'noopener noreferrer';
+          document.body.appendChild(anchor);
+          anchor.click();
+          document.body.removeChild(anchor);
+
+          // subtle feedback animation
+          downloadBtn.style.transform = 'scale(0.96)';
+          setTimeout(() => {
+            downloadBtn.style.transform = '';
+          }, 150);
+          
+          // Optional console reminder (demo)
+          console.log(`📥 Download started (placeholder): ${app.name} v${app.version}`);
+        });
+
+        // Assemble card
+        card.appendChild(iconDiv);
+        card.appendChild(infoDiv);
+        card.appendChild(downloadBtn);
+
+        return card;
+      }
+
+      // Render all apps with slight staggered animation feel
+      function renderApps() {
+        grid.innerHTML = '';
+        appsData.forEach((app, index) => {
+          const card = createAppCard(app);
+          // Add a subtle delay for each card to enhance smooth entrance
+          card.style.animationDelay = `${index * 0.08}s`;
+          card.style.animation = 'cardPop 0.45s cubic-bezier(0.23, 1, 0.32, 1) forwards';
+          card.style.opacity = '0'; // start hidden, animation fills
+          grid.appendChild(card);
+        });
+      }
+
+      // Initial render
+      renderApps();
+
+      // Additional fast loading optimization: pre-connect or nothing extra needed.
+      // Pure interaction ready.
+    })();
+  </script>
+</body>
+</html>
